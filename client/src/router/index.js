@@ -7,6 +7,13 @@ const routes = [
     {
         path: '/edit',
         name: 'edit',
+        props: (route) => ({
+            id: route.query.id,
+            name: route.query.name,
+            quality: route.query.quality,
+            price: route.query.price,
+            ambience: route.query.ambience
+          }),
         component: RestaurantCardEdit
     },
 ];

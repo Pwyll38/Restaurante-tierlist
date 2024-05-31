@@ -17,9 +17,14 @@ async function deleteRestaurantByName(name){
     await axios.delete(`http://localhost:3000/restaurant/${name}`)
 }
 
+async function updateRestaurant(restaurant, name){
+    await axios.put(`http://localhost:3000/restaurant/${name}`, restaurant)
+}
+
 export default {
     createRestaurant,
     getRestaurant,
     getAll,
-    deleteRestaurantByName
+    deleteRestaurantByName,
+    updateRestaurant
 }

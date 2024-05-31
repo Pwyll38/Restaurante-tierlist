@@ -1,16 +1,51 @@
-<script setup>
+<script>
 
-import { RouterView } from 'vue-router';
 import { useFetch } from '../controller/useFetch';
 
-const { getAll, createRestaurant, deleteRestaurantByName } = useFetch();
+const { deleteRestaurantByName } = useFetch();
 
-defineProps({
-  name: String,
-  quality: Number,
-  price: Number,
-  ambience: Number
-})
+export default {
+  name: "Card",
+
+  props: {
+    id: {
+      type: Number,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
+    },
+    quality: {
+      type: Number,
+      required: true
+    },
+    price: {
+      type: Number,
+      required: true
+    },
+    ambience: {
+      type: Number,
+      required: true
+    }
+  },
+
+  methods: {
+    navegateToEdit() {
+
+
+      this.$router.push({
+        path: '/edit', query: {
+          id: this.id,
+          name: this.name,
+          quality: this.quality,
+          price: this.price,
+          ambience: this.ambience
+        }
+      })
+    }
+  }
+}
 
 
 </script>
@@ -18,17 +53,16 @@ defineProps({
 <template>
   <div class="card">
     <h3>{{ name }}</h3>
-    <div
-      class="descript<RestaurantCard name={{ restaurant.name }} quality={{ restaurant.quality }} price={{ restaurant.price }} ambience={{ restaurant.ambience }} />ion">
+    <div class="Description">
       <p>Qualidade: {{ quality }}</p>
       <p>Preço: {{ price }}</p>
       <p>Ambiente: {{ ambience }}</p>
 
       <button @click="deleteRestaurantByName(this.name)">Delete</button>
 
-            <button @click="$router.push('/edit')">Edit</button>
-  
-        
+      <button @click="navegateToEdit">Edit</button>
+
+
 
 
     </div>

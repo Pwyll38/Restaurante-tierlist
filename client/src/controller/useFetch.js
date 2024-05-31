@@ -15,18 +15,23 @@ export function useFetch() {
         }
     }
 
-    async function createRestaurant(restaurante){
-        await restaurantController.createRestaurant(restaurante)
+    async function createRestaurant(restaurant){
+        await restaurantController.createRestaurant(restaurant)
     }
 
     async function deleteRestaurantByName(name){
         await restaurantController.deleteRestaurantByName(name)
     }
 
+    async function updateRestaurant(restaurant){
+        await restaurantController.updateRestaurant(restaurant)
+    }
+
     return {
         ...toRefs(state),
         getAll,
         createRestaurant,
-        deleteRestaurantByName
+        deleteRestaurantByName,
+        updateRestaurant
     }
 }

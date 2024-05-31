@@ -106,7 +106,7 @@ export default {
 
     <ul>
       <li v-for="restaurant in allInfo" :key="restaurant.id">
-        <RestaurantCard :name="restaurant.name" :quality="restaurant.quality" :price="restaurant.price"
+        <RestaurantCard :id="restaurant.id" :name="restaurant.name" :quality="restaurant.quality" :price="restaurant.price"
           :ambience="restaurant.ambience" />
       </li>
     </ul>
