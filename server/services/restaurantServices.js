@@ -8,7 +8,7 @@ router.use(express.json())
 
 async function getRestaurantById(id) {
     const queryResult = await pool.query(
-        "SELECT * FROM reastaurant WHERE id = $1", [id]);
+        "SELECT * FROM restaurant WHERE id = $1", [id]);
     if (!queryResult.rows.length) {
         throw new Error("Restaurante nao encontrado")
     }
@@ -22,7 +22,7 @@ async function getAllRestaurants(){
         throw new Error("Restaurantes nao encontrado")
     }
 
-    return queryResult.rows[0]
+    return queryResult.rows
 
 }
 
@@ -55,8 +55,23 @@ async function deleteRestaurantById(id){
     return result.rowCount
 }
 
+async function createNewRestaurant(body) {
+    const result = await pool.query(
+        "INSERT INTO restaurant(id, name, quality, ambience, price) VALUES ($1, $2, $3, $4, $5)",
+        [
+            body.id,
+            body.name,
+            body.quality,
+            body.ambience,
+            body.price,
+        ]
+    );
+    return result.rows[0];
+}
+
 export {
     getRestaurantById,
     deleteRestaurantById,
     getAllRestaurants,
+    createNewRestaurant
 }

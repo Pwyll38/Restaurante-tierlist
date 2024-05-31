@@ -1,10 +1,12 @@
 <script setup>
 
+//TODO
+
 defineProps({
   name: String,
-  quality: Number,
-  price: Number,
-  ambience: Number
+  quality: String,
+  price: String,
+  ambience: String
 })
 
 
@@ -13,7 +15,7 @@ defineProps({
 <template>
     <div class = "card">
       <h3>{{ name }}</h3>
-      <div class = "descript<RestaurantCard name={{ restaurant.name }} quality={{ restaurant.quality }} price={{ restaurant.price }} ambience={{ restaurant.ambience }} />ion">
+      <div class = "description">
       <p>Qualidade: {{ quality }}</p>
       <p>Preço: {{ price }}</p>
       <p>Ambiente: {{ ambience }}</p>
