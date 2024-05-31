@@ -20,7 +20,6 @@ export function useFetch() {
     }
 
     async function deleteRestaurantByName(name){
-        console.log(name);
         await restaurantController.deleteRestaurantByName(name)
     }
 
