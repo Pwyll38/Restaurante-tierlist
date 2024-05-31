@@ -1,9 +1,9 @@
 import * as restaurantServices from "../services/restaurantServices.js"
 
-async function getRestaurantById(req,res){
+async function getRestaurantByName(req,res){
     try{
-        const { id } = req.params
-        const restaurant = await restaurantServices.getRestaurantById(id)
+        const { name } = req.params
+        const restaurant = await restaurantServices.getRestaurantByName(name)
 
         if(!restaurant){console.log("Restaurante nao encontrado")}
 
@@ -32,7 +32,6 @@ async function createNewRestaurant(req,res){
         const body = req.body;
         const restaurant = await restaurantServices.createNewRestaurant(body);
         res.json(restaurant);
-        console.log("Restaurante a ser colocado: "+ res.name);
     } catch (error) {
         console.error(error);
         res.status(error.status).send("Erro ao executar a query " + error.message);
@@ -40,12 +39,11 @@ async function createNewRestaurant(req,res){
 
 }
 
-
-async function updateRestaurantById(req, res) {
+async function updateRestaurantByName(req, res) {
     try {
         const body = req.body;
-        const { id } = req.params
-        const restaurant = await restaurantServices.updateRestaurantById(id, body);
+        const { name } = req.params
+        const restaurant = await restaurantServices.updateRestaurantByName(name, body);
 
         if (!restaurant) throw new Error('Restaurante nao encontrado');
 
@@ -55,10 +53,10 @@ async function updateRestaurantById(req, res) {
     }
 }
 
-async function deleteRestaurantById(req, res) {
+async function deleteRestaurantByName(req, res) {
     try {
-        const id = req.params.id;
-        const restaurant = await restaurantServices.deleteRestaurantById(id);
+        const name = req.params.name;
+        const restaurant = await restaurantServices.deleteRestaurantByName(name);
 
         if (!restaurant) throw new Error('Restaurante nao encontrado');
 
@@ -70,9 +68,9 @@ async function deleteRestaurantById(req, res) {
 }
 
 export {
-    getRestaurantById,
     createNewRestaurant,
-    updateRestaurantById,
-    deleteRestaurantById,
-    getAllRestaurants
+    getAllRestaurants,
+    deleteRestaurantByName,
+    getRestaurantByName,
+    updateRestaurantByName
 }

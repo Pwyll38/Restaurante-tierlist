@@ -12,30 +12,46 @@ export default {
   },
 
   setup() {
-    const { getAll, createRestaurant } = useFetch();
+    const { getAll, createRestaurant, deleteRestaurantByName } = useFetch();
 
     const allInfo = ref()
     const nomeRest = ref("")
     const qualiRest = ref("")
     const priceRest = ref("")
     const ambRest = ref("")
+    const lastId = 0
+
+    const nameDelete = ref("")
 
     return {
       getAll,
       createRestaurant,
+      deleteRestaurantByName,
       allInfo,
       nomeRest,
       qualiRest,
       priceRest,
-      ambRest
+      ambRest,
+      nameDelete,
+      lastId
     }
   },
 
   async beforeMount() {
     this.allInfo = await this.getAllInfo()
+
+    this.lastId = this.getLastId()
   },
 
   methods: {
+
+    getLastId() {
+      const keys = Object.keys(this.allInfo);
+      const lastKey = keys[keys.length - 1];
+      const lastValue = this.allInfo[lastKey];
+
+      return lastValue.id
+    },
 
     async getAllInfo() {
       try {
@@ -44,10 +60,6 @@ export default {
         if (!resposta) {
           console.log("GetAllInfoError: sem resposta");
         }
-
-        console.log("All:" + JSON.stringify(resposta));
-
-        console.log("Rest:" + JSON.stringify(resposta[3]));
 
         return resposta
 
@@ -58,21 +70,23 @@ export default {
 
     async criar() {
       try {
-        console.log(this.nomeRest);
-        console.log(this.qualiRest);
-        console.log(this.priceRest);
-        console.log(this.ambRest);
-
-        const resposta = await controller.createRestaurant({
-          id: 11,
+        this.lastId++
+        await controller.createRestaurant({
+          id: this.lastId,
           name: this.nomeRest,
-          qualidade: this.qualiRest,
+          quality: this.qualiRest,
           price: this.priceRest,
-          ambieance: this.ambRest
+          ambience: this.ambRest
         });
 
-        console.log("Resposta: " + resposta);
+      } catch (error) {
+        console.log("erro" + error);
+      }
+    },
 
+    async deletarPorNome() {
+      try {
+        await controller.deleteRestaurantByName(this.nameDelete)
       } catch (error) {
         console.log("erro" + error);
       }
@@ -92,24 +106,20 @@ export default {
 
     <ul>
       <li v-for="restaurant in allInfo" :key="restaurant.id">
-        <RestaurantCard 
-          :name="restaurant.name" 
-          :quality="restaurant.quality" 
-          :price="restaurant.price" 
-          :ambience="restaurant.ambience" 
-        />
+        <RestaurantCard :name="restaurant.name" :quality="restaurant.quality" :price="restaurant.price"
+          :ambience="restaurant.ambience" />
       </li>
     </ul>
 
 
+    <div>
+      <input type="text" label="name" v-model="nomeRest" placeholder="Digite aqui o nome"></input>
+      <input type="text" label="quality" v-model="qualiRest" placeholder="Digite aqui a qualidade"></input>
+      <input type="text" label="price" v-model="priceRest" placeholder="Digite aqui o preco"></input>
+      <input type="text" label="ambience" v-model="ambRest" placeholder="Digite aqui a ambieance"></input>
 
-    <input type="text" label="name" v-model="nomeRest" placeholder="Digite aqui o nome"></input>
-    <input type="text" label="quality" v-model="qualiRest" placeholder="Digite aqui a qualidade"></input>
-    <input type="text" label="price" v-model="priceRest" placeholder="Digite aqui o preco"></input>
-    <input type="text" label="ambience" v-model="ambRest" placeholder="Digite aqui a ambieance"></input>
-
-    <button @click="criar">Criar</button>
-    <button @click="getAllInfo">GetAllInfo</button>
+      <button @click="criar">Criar</button>
+    </div>
 
   </div>
 </template>
@@ -117,6 +127,10 @@ export default {
 <style scoped>
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+ul {
+    list-style-type: none;
 }
 
 .logo.vue:hover {

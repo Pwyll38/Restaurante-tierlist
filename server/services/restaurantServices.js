@@ -5,15 +5,14 @@ const router = express.Router();
 
 router.use(express.json())
 
-
-async function getRestaurantById(id) {
+async function getRestaurantByName(name) {
     const queryResult = await pool.query(
-        "SELECT * FROM restaurant WHERE id = $1", [id]);
+        "SELECT * FROM restaurant WHERE name = $1", [name]);
     if (!queryResult.rows.length) {
         throw new Error("Restaurante nao encontrado")
     }
 
-    return queryResult.rows[0];
+    return queryResult.rows;
 }
 
 async function getAllRestaurants(){
@@ -26,8 +25,8 @@ async function getAllRestaurants(){
 
 }
 
-async function updateRestaurantById(id, updates){
-    const restaurant = await getRestaurantById(id);
+async function updateRestaurantByName(name, updates){
+    const restaurant = await getRestaurantByName(name);
 
     if (!restaurant) throw new Error("Restaurante nao encontrado");
 
@@ -37,20 +36,19 @@ async function updateRestaurantById(id, updates){
 
     const values = Object.values(updates);
 
-    const query = `UPDATE restaurant SET ${fields} WHERE id = $${values.length + 1
+    const query = `UPDATE restaurant SET ${fields} WHERE name = $${values.length + 1
         } RETURNING *`;
-    const result = await pool.query(query, [...values, id]);
+    const result = await pool.query(query, [...values, name]);
     return result.rows[0];
 }
 
+async function deleteRestaurantByName(name){
 
-async function deleteRestaurantById(id){
-
-    const reastaurant = await getRestaurantById(id)
+    const reastaurant = await getRestaurantByName(name)
 
     if(!reastaurant) throw new Error("Restaurante nao encontrado")
 
-    const result = await pool.query("DELETE FROM restaurant WHERE id = $1", [id]);
+    const result = await pool.query("DELETE FROM restaurant WHERE name = $1", [name]);
 
     return result.rowCount
 }
@@ -70,8 +68,9 @@ async function createNewRestaurant(body) {
 }
 
 export {
-    getRestaurantById,
-    deleteRestaurantById,
     getAllRestaurants,
-    createNewRestaurant
+    createNewRestaurant,
+    deleteRestaurantByName,
+    getRestaurantByName,
+    updateRestaurantByName
 }

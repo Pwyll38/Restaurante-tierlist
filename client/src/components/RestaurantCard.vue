@@ -1,5 +1,9 @@
 <script setup>
 
+import { useFetch } from '../controller/useFetch';
+
+const { getAll, createRestaurant, deleteRestaurantByName } = useFetch();
+
 defineProps({
   name: String,
   quality: Number,
@@ -17,6 +21,8 @@ defineProps({
       <p>Qualidade: {{ quality }}</p>
       <p>Preço: {{ price }}</p>
       <p>Ambiente: {{ ambience }}</p>
+
+      <button @click="deleteRestaurantByName(this.name)">Delete</button>
       </div>
     </div>
     
@@ -25,7 +31,9 @@ defineProps({
 
 <style scoped>
 .card{
-  margin: 2em
+  margin: 2em;
+  border: 0.4em solid white;
+  text-align: left;
 }
 .card:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
