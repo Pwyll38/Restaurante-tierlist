@@ -18,7 +18,7 @@ async function getRestaurantByName(name) {
 async function getAllRestaurants(){
     const queryResult = await pool.query("SELECT * FROM restaurant")
     if (!queryResult.rows.length) {
-        throw new Error("Restaurantes nao encontrado")
+        console.log("Nao ha restaurantes");
     }
 
     return queryResult.rows

@@ -39,13 +39,22 @@ export default {
 
   async beforeMount() {
     this.allInfo = await this.getAllInfo()
+    console.log("ALL INFO: "+ this.allInfo);
+    if(this.allInfo==""){
+      this.lastId=0
+    }else{
+      this.lastId = this.getLastId()
+    }
 
-    this.lastId = this.getLastId()
   },
 
   methods: {
 
     getLastId() {
+      if(this.lastId==0){
+        return 0
+      }
+      
       const keys = Object.keys(this.allInfo);
       const lastKey = keys[keys.length - 1];
       const lastValue = this.allInfo[lastKey];
@@ -57,10 +66,6 @@ export default {
       try {
         const resposta = await controller.getAll()
 
-        if (!resposta) {
-          console.log("GetAllInfoError: sem resposta");
-        }
-
         return resposta
 
       } catch (error) {
@@ -68,28 +73,11 @@ export default {
       }
     },
 
-    async criar() {
-      try {
-        this.lastId++
-        await controller.createRestaurant({
-          id: this.lastId,
-          name: this.nomeRest,
-          quality: this.qualiRest,
-          price: this.priceRest,
-          ambience: this.ambRest
-        });
-
-      } catch (error) {
-        console.log("erro" + error);
-      }
-    },
-
-    async deletarPorNome() {
-      try {
-        await controller.deleteRestaurantByName(this.nameDelete)
-      } catch (error) {
-        console.log("erro" + error);
-      }
+    navegateToCreate() {
+      this.$router.push({
+        path: '/create', query:{
+          id: this.getLastId()+1
+        }})
     }
 
   }
@@ -113,12 +101,7 @@ export default {
 
 
     <div>
-      <input type="text" label="name" v-model="nomeRest" placeholder="Digite aqui o nome"></input>
-      <input type="text" label="quality" v-model="qualiRest" placeholder="Digite aqui a qualidade"></input>
-      <input type="text" label="price" v-model="priceRest" placeholder="Digite aqui o preco"></input>
-      <input type="text" label="ambience" v-model="ambRest" placeholder="Digite aqui a ambieance"></input>
-
-      <button @click="criar">Criar</button>
+      <button @click="navegateToCreate">Criar</button>
     </div>
 
   </div>

@@ -1,10 +1,11 @@
 <script>
 
 import { useFetch } from '../controller/useFetch';
+import controller from "../controller/restaurant"
 
-const { deleteRestaurantByName } = useFetch();
 
 export default {
+
   name: "Card",
 
   props: {
@@ -30,10 +31,16 @@ export default {
     }
   },
 
+  setup() {
+    const { deleteRestaurantByName } = useFetch();
+
+    return {
+      deleteRestaurantByName
+    }
+  },
+
   methods: {
     navegateToEdit() {
-
-
       this.$router.push({
         path: '/edit', query: {
           id: this.id,
@@ -43,7 +50,16 @@ export default {
           ambience: this.ambience
         }
       })
-    }
+    },
+
+    async deletarPorNome() {
+      try {
+        await controller.deleteRestaurantByName(this.name)
+        window.location.reload()
+      } catch (error) {
+        console.log("erro" + error);
+      }
+    },
   }
 }
 
@@ -58,7 +74,7 @@ export default {
       <p>Preço: {{ price }}</p>
       <p>Ambiente: {{ ambience }}</p>
 
-      <button @click="deleteRestaurantByName(this.name)">Delete</button>
+      <button @click="deletarPorNome">Delete</button>
 
       <button @click="navegateToEdit">Edit</button>
 
@@ -76,6 +92,7 @@ export default {
   margin: 2em;
   border: 0.4em solid white;
   text-align: left;
+  width: 50em;
 }
 
 .card:hover {
