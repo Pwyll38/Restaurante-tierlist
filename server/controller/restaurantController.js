@@ -1,9 +1,9 @@
 import * as restaurantServices from "../services/restaurantServices.js"
 
-async function getRestaurantByName(req,res){
+async function getRestaurantById(req,res){
     try{
-        const { name } = req.params
-        const restaurant = await restaurantServices.getRestaurantByName(name)
+        const { id } = req.params
+        const restaurant = await restaurantServices.getRestaurantById(id)
 
         if(!restaurant){console.log("Restaurante nao encontrado")}
 
@@ -39,11 +39,11 @@ async function createNewRestaurant(req,res){
 
 }
 
-async function updateRestaurantByName(req, res) {
+async function updateRestaurantById(req, res) {
     try {
         const body = req.body;
-        const { name } = req.params
-        const restaurant = await restaurantServices.updateRestaurantByName(name, body);
+        const { id } = req.params
+        const restaurant = await restaurantServices.updateRestaurantById(id, body);
 
         if (!restaurant) throw new Error('Restaurante nao encontrado');
 
@@ -53,10 +53,10 @@ async function updateRestaurantByName(req, res) {
     }
 }
 
-async function deleteRestaurantByName(req, res) {
+async function deleteRestaurantById(req, res) {
     try {
-        const name = req.params.name;
-        const restaurant = await restaurantServices.deleteRestaurantByName(name);
+        const id = req.params.id;
+        const restaurant = await restaurantServices.deleteRestaurantById(id);
 
         if (!restaurant) throw new Error('Restaurante nao encontrado');
 
@@ -70,7 +70,7 @@ async function deleteRestaurantByName(req, res) {
 export {
     createNewRestaurant,
     getAllRestaurants,
-    deleteRestaurantByName,
-    getRestaurantByName,
-    updateRestaurantByName
+    deleteRestaurantById,
+    getRestaurantById,
+    updateRestaurantById
 }

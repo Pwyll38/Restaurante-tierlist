@@ -5,9 +5,9 @@ const router = express.Router();
 
 router.use(express.json())
 
-async function getRestaurantByName(name) {
+async function getRestaurantById(id) {
     const queryResult = await pool.query(
-        "SELECT * FROM restaurant WHERE name = $1", [name]);
+        "SELECT * FROM restaurant WHERE id = $1", [id]);
     if (!queryResult.rows.length) {
         throw new Error("Restaurante nao encontrado")
     }
@@ -25,8 +25,8 @@ async function getAllRestaurants(){
 
 }
 
-async function updateRestaurantByName(name, updates){
-    const restaurant = await getRestaurantByName(name);
+async function updateRestaurantById(id, updates){
+    const restaurant = await getRestaurantById(id);
 
     if (!restaurant) throw new Error("Restaurante nao encontrado");
 
@@ -36,19 +36,19 @@ async function updateRestaurantByName(name, updates){
 
     const values = Object.values(updates);
 
-    const query = `UPDATE restaurant SET ${fields} WHERE name = $${values.length + 1
+    const query = `UPDATE restaurant SET ${fields} WHERE id = $${values.length + 1
         } RETURNING *`;
-    const result = await pool.query(query, [...values, name]);
+    const result = await pool.query(query, [...values, id]);
     return result.rows[0];
 }
 
-async function deleteRestaurantByName(name){
+async function deleteRestaurantById(id){
 
-    const reastaurant = await getRestaurantByName(name)
+    const reastaurant = await getRestaurantById(id)
 
     if(!reastaurant) throw new Error("Restaurante nao encontrado")
 
-    const result = await pool.query("DELETE FROM restaurant WHERE name = $1", [name]);
+    const result = await pool.query("DELETE FROM restaurant WHERE id = $1", [id]);
 
     return result.rowCount
 }
@@ -70,7 +70,7 @@ async function createNewRestaurant(body) {
 export {
     getAllRestaurants,
     createNewRestaurant,
-    deleteRestaurantByName,
-    getRestaurantByName,
-    updateRestaurantByName
+    deleteRestaurantById,
+    getRestaurantById,
+    updateRestaurantById
 }

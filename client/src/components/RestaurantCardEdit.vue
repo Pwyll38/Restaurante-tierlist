@@ -75,7 +75,7 @@ export default {
           price: this.priceNew,
           ambience: this.ambienceNew
         },
-          this.name);
+          this.id);
       } catch (error) {
         console.log("Erro ao editar" + error);
       }

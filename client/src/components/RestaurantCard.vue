@@ -32,10 +32,10 @@ export default {
   },
 
   setup() {
-    const { deleteRestaurantByName } = useFetch();
+    const { deleteRestaurantById } = useFetch();
 
     return {
-      deleteRestaurantByName
+      deleteRestaurantById
     }
   },
 
@@ -52,9 +52,9 @@ export default {
       })
     },
 
-    async deletarPorNome() {
+    async deletarPorId() {
       try {
-        await controller.deleteRestaurantByName(this.name)
+        await controller.deleteRestaurantById(this.id)
         window.location.reload()
       } catch (error) {
         console.log("erro" + error);
@@ -74,7 +74,7 @@ export default {
       <p>Preço: {{ price }}</p>
       <p>Ambiente: {{ ambience }}</p>
 
-      <button @click="deletarPorNome">Delete</button>
+      <button @click="deletarPorId">Delete</button>
 
       <button @click="navegateToEdit">Edit</button>
 
