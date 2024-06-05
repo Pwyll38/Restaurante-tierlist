@@ -52,7 +52,7 @@ export default {
 
     getLastId() {
       if(this.lastId==0){
-        return 0
+        return 1
       }
       
       const keys = Object.keys(this.allInfo);
