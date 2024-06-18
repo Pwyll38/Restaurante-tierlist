@@ -1,8 +1,9 @@
 <script>
 import { ref } from "vue";
 import RestaurantCard from './RestaurantCard.vue'
-import { useFetch } from '../controller/useFetch';
+import { useFetch } from '../controller/useFetch'
 import controller from "../controller/restaurant"
+import sillySound from '../assets/sillySound.mp3'
 
 
 export default {
@@ -22,6 +23,7 @@ export default {
     const lastId = 0
 
     const nameDelete = ref("")
+    const isLogoShrunk = ref("")
 
     return {
       getAll,
@@ -33,16 +35,17 @@ export default {
       priceRest,
       ambRest,
       nameDelete,
-      lastId
+      lastId,
+      isLogoShrunk
     }
   },
 
   async beforeMount() {
     this.allInfo = await this.getAllInfo()
-    console.log("ALL INFO: "+ this.allInfo);
-    if(this.allInfo==""){
-      this.lastId=0
-    }else{
+    console.log("ALL INFO: " + JSON.stringify(this.allInfo));
+    if (this.allInfo == "") {
+      this.lastId = 0
+    } else {
       this.lastId = this.getLastId()
     }
 
@@ -50,11 +53,24 @@ export default {
 
   methods: {
 
+    playSilly() {
+
+      this.isLogoShrunk = !this.isLogoShrunk;
+      setTimeout(() => {
+        this.isLogoShrunk = !this.isLogoShrunk;
+      }, 200);
+
+      const audio = new Audio(sillySound)
+      audio.volume = 0.2
+      audio.play()
+
+    },
+
     getLastId() {
-      if(this.lastId==0){
+      if (this.lastId == 0) {
         return 1
       }
-      
+
       const keys = Object.keys(this.allInfo);
       const lastKey = keys[keys.length - 1];
       const lastValue = this.allInfo[lastKey];
@@ -75,14 +91,12 @@ export default {
 
     navegateToCreate() {
       this.$router.push({
-        path: '/create', query:{
-          id: this.getLastId()+1
-        }})
+        path: '/create', query: {
+          id: this.getLastId() + 1
+        }
+      })
     }
-
   }
-
-
 }
 
 
@@ -90,30 +104,44 @@ export default {
 
 <template>
 
-  <div>
+  <img src="../assets/logo.png" alt="Logo" class="logo" id="logo" :class="{ shrink: isLogoShrunk }" @click="playSilly">
+
+  <div class="card-row">
 
     <ul>
       <li v-for="restaurant in allInfo" :key="restaurant.id">
-        <RestaurantCard :id="restaurant.id" :name="restaurant.name" :quality="restaurant.quality" :price="restaurant.price"
-          :ambience="restaurant.ambience" />
+        <RestaurantCard :id="restaurant.id" :name="restaurant.name" :quality="restaurant.quality"
+          :price="restaurant.price" :ambience="restaurant.ambience" />
       </li>
     </ul>
 
 
-    <div>
-      <button @click="navegateToCreate">Criar</button>
-    </div>
-
   </div>
+  <div>
+    <button @click="navegateToCreate">Criar</button>
+  </div>
+
 </template>
 
 <style scoped>
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.card-row {
+  margin-left: 9%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  width: 70%;
+  transition: transform 0.5s ease;
+}
+
+.shrink {
+  transform: scale(0.8);
 }
 
 ul {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 .logo.vue:hover {

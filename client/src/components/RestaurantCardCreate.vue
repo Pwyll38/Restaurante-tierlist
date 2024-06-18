@@ -86,9 +86,55 @@ export default {
 <template>
 
   <input type="text" v-model="nameNew" placeholder="New name">
-  <input type="number" max="10" min="0" v-model="qualityNew" placeholder="New quality">
-  <input type="number" max="10" min="0" v-model="priceNew" placeholder="New price">
-  <input type="number" max="10" min="0" v-model="ambienceNew" placeholder="New ambience">
+  
+  <div class="inputs">
+    <select v-model="qualityNew" placeholder="New quality">
+      <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+    </select>
+  </div>
+    <div class="inputs">
+    <select v-model="priceNew" placeholder="New price">
+      <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+    </select>
+    </div>
+
+    <div class="inputs">
+    <select v-model="ambienceNew" placeholder="New ambience">
+      <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+    </select>
+
+  </div>
+
 
 
   <button @click="$router.push('/')">Cancel</button>
