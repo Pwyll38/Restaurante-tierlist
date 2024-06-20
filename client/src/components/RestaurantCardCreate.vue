@@ -88,6 +88,7 @@ export default {
   <input type="text" v-model="nameNew" placeholder="New name">
   
   <div class="inputs">
+    <h3>Quality</h3>
     <select v-model="qualityNew" placeholder="New quality">
       <option value="0">0</option>
       <option value="1">1</option>
@@ -103,6 +104,7 @@ export default {
     </select>
   </div>
     <div class="inputs">
+      <h3>Price</h3>
     <select v-model="priceNew" placeholder="New price">
       <option value="0">0</option>
       <option value="1">1</option>
@@ -119,6 +121,7 @@ export default {
     </div>
 
     <div class="inputs">
+      <h3>Ambience</h3>
     <select v-model="ambienceNew" placeholder="New ambience">
       <option value="0">0</option>
       <option value="1">1</option>
