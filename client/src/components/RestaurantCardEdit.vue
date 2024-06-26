@@ -97,7 +97,8 @@ export default {
   <input type="text" v-model="nameNew" placeholder="New name">
   
   <div class="inputs">
-    <select v-model="qualityNew" placeholder="New quality">
+    <h4>Quality</h4>
+    <select v-model="qualityNew" placeholder="New quality" class = "select">
       <option value="0">0</option>
       <option value="1">1</option>
       <option value="2">2</option>
@@ -112,7 +113,8 @@ export default {
     </select>
   </div>
     <div class="inputs">
-    <select v-model="priceNew" placeholder="New price">
+      <h4>Price</h4>
+    <select v-model="priceNew" placeholder="New price" class = "select">
       <option value="0">0</option>
       <option value="1">1</option>
       <option value="2">2</option>
@@ -128,7 +130,8 @@ export default {
     </div>
 
     <div class="inputs">
-    <select v-model="ambienceNew" placeholder="New ambience">
+      <h4>Ambience</h4>
+    <select v-model="ambienceNew" placeholder="New ambience" class = "select">
       <option value="0">0</option>
       <option value="1">1</option>
       <option value="2">2</option>
@@ -149,4 +152,8 @@ export default {
   <button @click="confirmEdit">Confirm</button>
 </template>
 
-<style scoped></style>
+<style scoped>
+.select{
+  width: 8em;
+}
+</style>
