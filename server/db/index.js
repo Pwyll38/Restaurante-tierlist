@@ -1,12 +1,19 @@
 import pkg from 'pg'
 const { Pool } = pkg;
+import "dotenv/config"
 
-const pool = new Pool({
+/*const pool = new Pool({
     user: "postgres",
     host: "localhost",
     database: "postgres",
     password: "1234",
     port: 5432,
+})*/
+
+const pool = new Pool({
+
+    connectionString: process.env.POSTGRES_URL,
+  
 })
 
 pool.connect((err, client, release) => {

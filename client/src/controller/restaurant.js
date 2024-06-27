@@ -4,8 +4,8 @@ function createRestaurant(restaurant) {
     return axios.post('http://localhost:3000/restaurant/', restaurant)
 }
 
-async function getRestaurant(name) {
-    return axios.get(`http://localhost:3000/restaurant/${name}`)
+async function getRestaurant(id) {
+    return axios.get(`http://localhost:3000/restaurant/${id}`)
 }
 
 async function getAll() {
@@ -13,18 +13,18 @@ async function getAll() {
     return response.data;
 }
 
-async function deleteRestaurantByName(name){
-    await axios.delete(`http://localhost:3000/restaurant/${name}`)
+async function deleteRestaurantById(id){
+    await axios.delete(`http://localhost:3000/restaurant/${id}`)
 }
 
-async function updateRestaurant(restaurant, name){
-    await axios.put(`http://localhost:3000/restaurant/${name}`, restaurant)
+async function updateRestaurant(restaurant, id){
+    await axios.put(`http://localhost:3000/restaurant/${id}`, restaurant)
 }
 
 export default {
     createRestaurant,
     getRestaurant,
     getAll,
-    deleteRestaurantByName,
+    deleteRestaurantById,
     updateRestaurant
 }
