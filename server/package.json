@@ -8,5 +8,9 @@
     "dev": "node index.js"
   },
   "author": "Pwyll",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/postgres": "^0.9.0",
+    "vercel": "^34.2.8"
+  }
 }

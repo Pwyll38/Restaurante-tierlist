@@ -1,24 +1,30 @@
 import axios from "axios"
 
+//DEV URL: `http://localhost:3000/restaurant/`
+//PROD URL: 
+const url = `http://localhost:3000/restaurant/`
+
 function createRestaurant(restaurant) {
-    return axios.post('http://localhost:3000/restaurant/', restaurant)
+    return axios.post(`${url}`, restaurant)
 }
 
 async function getRestaurant(id) {
-    return axios.get(`http://localhost:3000/restaurant/${id}`)
+    console.log(process.env);
+    return axios.get(`${url}${id}`)
 }
 
 async function getAll() {
-    const response = await axios.get('http://localhost:3000/restaurant/');
+    const response = await axios.get(`${url}`);
     return response.data;
 }
 
 async function deleteRestaurantById(id){
-    await axios.delete(`http://localhost:3000/restaurant/${id}`)
+    await axios.delete(`${url}${id}`)
 }
 
 async function updateRestaurant(restaurant, id){
-    await axios.put(`http://localhost:3000/restaurant/${id}`, restaurant)
+    console.log(`${url}${id}`);
+    await axios.put(`${url}${id}`, restaurant)
 }
 
 export default {
