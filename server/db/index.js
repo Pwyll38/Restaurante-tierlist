@@ -11,9 +11,11 @@ import "dotenv/config"
 })*/
 
 const pool = new Pool({
-
-    connectionString: process.env.POSTGRES_URL,
-  
+    user: "postgres",
+    host: "localhost",
+    database: "postgres",
+    password: "1234",
+    port: 5432,
 })
 
 pool.connect((err, client, release) => {
