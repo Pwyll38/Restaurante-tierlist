@@ -1,7 +1,7 @@
 import axios from "axios"
 
 //DEV URL: `http://localhost:3000/restaurant/`
-//PROD URL: 
+//PROD URL: https://restaurante-tierlist.onrender.com
 const url = `http://localhost:3000/restaurant/`
 
 function createRestaurant(restaurant) {
