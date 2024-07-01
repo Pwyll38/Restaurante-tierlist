@@ -1,20 +1,19 @@
 import axios from "axios"
 
 //DEV URL: `http://localhost:3000/restaurant/`
-//PROD URL: https://restaurante-tierlist.onrender.com
-const url = `http://localhost:3000/restaurant/`
+//PROD URL: `https://restaurante-tierlist.onrender.com`
+const url = `https://restaurante-tierlist.onrender.com`
 
 function createRestaurant(restaurant) {
-    return axios.post(`${url}`, restaurant)
+    return axios.post(`${url}restaurant/`, restaurant)
 }
 
 async function getRestaurant(id) {
-    console.log(process.env);
-    return axios.get(`${url}${id}`)
+    return axios.get(`${url}restaurant/${id}`)
 }
 
 async function getAll() {
-    const response = await axios.get(`${url}`);
+    const response = await axios.get(`${url}/restaurant/`);
     return response.data;
 }
 
