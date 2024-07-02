@@ -5,15 +5,15 @@ import axios from "axios"
 const url = `https://restaurante-tierlist.onrender.com`
 
 function createRestaurant(restaurant) {
-    return axios.post(`${url}restaurant/`, restaurant)
+    return axios.post(`${url}`, restaurant)
 }
 
 async function getRestaurant(id) {
-    return axios.get(`${url}restaurant/${id}`)
+    return axios.get(`${url}${id}`)
 }
 
 async function getAll() {
-    const response = await axios.get(`${url}/restaurant/`);
+    const response = await axios.get(`${url}`);
     return response.data;
 }
 
